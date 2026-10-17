@@ -97,7 +97,14 @@
   .screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .hero-phone { justify-self: center; text-align: center; }
-  .hero-phone .phone { width: 250px; margin: 0 auto; transform: rotate(3deg); cursor: pointer; }
+
+  .hero-phone .phone {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+.hero-phone .phone img { pointer-events: none; -webkit-user-drag: none; }
   .hero-phone .phone .screen { display: none; }
   .hero-phone .phone .screen.on { display: grid; }
   .dots { display: flex; gap: 8px; justify-content: center; margin-top: 22px; }
@@ -179,17 +186,15 @@ Hi, I'm Afaq Mehmood. I build and ship mobile apps for Android and iOS using Rea
     </div>
 
     <!-- Hero phone: shows screenshots of your best app. Tap the phone or the dots to switch. -->
-    <div class="hero-phone">
-      <div class="phone" id="heroPhone" role="img" aria-label="Screenshots of my featured app">
-        <div class="screen on" data-label="Add images/tonhunt-1.png"><img src="screenshots/efit_home.jpg" alt="TonHunt home screen" onerror="this.remove()" /></div>
-        <div class="screen" data-label="Add images/tonhunt-2.png"><img src="screenshots/forcruise/2.jpg" alt="TonHunt details screen" onerror="this.remove()" /></div>
-        <div class="screen" data-label="Add images/tonhunt-3.png"><img src="screenshots/tonhunt-3.png" alt="TonHunt profile screen" onerror="this.remove()" /></div>
-          <div class="screen" data-label="Add images/tonhunt-2.png"><img src="screenshots/tonhunt-2.png" alt="TonHunt details screen" onerror="this.remove()" /></div>
-        <div class="screen" data-label="Add images/tonhunt-3.png"><img src="screenshots/tonhunt-3.png" alt="TonHunt profile screen" onerror="this.remove()" /></div>
-      </div>
-      <div class="dots" id="heroDots"></div>
-      <p class="hint">Tap the phone to see more screens</p>
+   <div class="hero-phone">
+  <div class="phone" id="heroPhone" role="img" aria-label="Screenshots of my featured app">
+    <div class="screen on" data-label="Loading...">
+      <img id="heroImg" src="" alt="App screenshot" draggable="false" />
     </div>
+  </div>
+  <div class="dots" id="heroDots"></div>
+  <p class="hint">Tap for next, press and hold to pause</p>
+</div>
   </div>
 
   <!-- PROJECTS -->
@@ -332,29 +337,91 @@ Hi, I'm Afaq Mehmood. I build and ship mobile apps for Android and iOS using Rea
 </footer>
 
 <script>
-  // Hero phone: switch between screenshots
+  // Hero phone: 20-30 images, 5 fixed dots, auto-slide 3s, long press = pause
   (function () {
+    // Apni saari images ke path yahan likhein (20-30 jitni bhi hon)
+    var images = [
+      'screenshots/efit_home.jpg',
+      'screenshots/forcruise/0.jpg',
+      'screenshots/forcruise/1.jpg',
+      'screenshots/forcruise/2.jpg',
+      'screenshots/forcruise/3.jpg',
+      'screenshots/forcruise/4.jpg',
+      'screenshots/forcruise/6.jpg',
+      'screenshots/efit_login.jpg',
+      'screenshots/efit_edit.jpg',
+      'screenshots/efit_setting.jpg'
+      // ... baqi images yahan add karte jayein
+    ];
+
+    var DOT_COUNT = 5;      // dots hamesha 5 hi rahenge
+    var DELAY = 3000;       // 3 seconds
+    var HOLD_MS = 250;      // itni der dabaye rakhne par pause
+
     var phone = document.getElementById('heroPhone');
-    var screens = phone.querySelectorAll('.screen');
+    var img = document.getElementById('heroImg');
     var dotsBox = document.getElementById('heroDots');
-    var current = 0;
-    function show(i) {
-      current = (i + screens.length) % screens.length;
-      screens.forEach(function (s, n) { s.classList.toggle('on', n === current); });
-      dotsBox.querySelectorAll('button').forEach(function (d, n) {
-        d.setAttribute('aria-current', n === current ? 'true' : 'false');
-      });
-    }
-    screens.forEach(function (_, n) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.setAttribute('aria-label', 'Show screen ' + (n + 1));
-      b.addEventListener('click', function () { show(n); });
+    var current = 0, paused = false, holdTimer = null, autoTimer = null, longPressed = false;
+
+    // 5 fixed dots
+    for (var d = 0; d < DOT_COUNT; d++) {
+      var b = document.createElement('span');
+      b.style.cssText = 'width:12px;height:12px;border-radius:50%;border:2px solid var(--accent);display:inline-block';
       dotsBox.appendChild(b);
+    }
+    var dots = dotsBox.children;
+
+    function show(i) {
+      current = (i + images.length) % images.length;
+      img.style.display = '';
+      img.src = images[current];
+      var active = current % DOT_COUNT;
+      for (var n = 0; n < dots.length; n++) {
+        dots[n].style.background = n === active ? 'var(--accent)' : 'transparent';
+      }
+    }
+    img.addEventListener('error', function () { img.style.display = 'none'; });
+
+    function startAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(function () {
+        if (!paused) show(current + 1);
+      }, DELAY);
+    }
+
+    function pressStart() {
+      longPressed = false;
+      clearTimeout(holdTimer);
+      holdTimer = setTimeout(function () {
+        longPressed = true;
+        paused = true;
+      }, HOLD_MS);
+    }
+    function pressEnd() {
+      clearTimeout(holdTimer);
+      if (paused) {
+        paused = false;
+        startAuto(); // release ke baad dobara 3 sec se start
+      }
+    }
+
+    phone.addEventListener('pointerdown', pressStart);
+    phone.addEventListener('pointerup', pressEnd);
+    phone.addEventListener('pointerleave', pressEnd);
+    phone.addEventListener('pointercancel', pressEnd);
+    phone.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+    // Click = next image (long press ke baad click ignore)
+    phone.addEventListener('click', function () {
+      if (longPressed) { longPressed = false; return; }
+      show(current + 1);
+      startAuto(); // timer reset
     });
-    phone.addEventListener('click', function () { show(current + 1); });
+
     show(0);
+    startAuto();
   })();
+
   document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
 </body>
