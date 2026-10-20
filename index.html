@@ -125,6 +125,36 @@
   .sec-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
   .sec-sub { color: var(--muted); margin: 0 0 36px; max-width: 36em; }
 
+  
+/* Project demo videos */
+.demo-video {
+  margin-top: 28px;
+}
+
+.demo-video h4 {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1.2rem;
+  margin: 0 0 12px;
+}
+
+.demo-video video {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  max-height: 520px;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #080b18;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 18px 40px -22px rgba(21, 26, 48, .5);
+}
+
+.demo-video .caption {
+  text-align: left;
+  margin-top: 10px;
+}
+
   /* projects */
   .project { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 32px; margin-bottom: 28px; }
   .project h3 { font-size: 1.9rem; font-weight: 800; }
@@ -229,6 +259,28 @@ Hi, I'm Afaq Mehmood. I build and ship mobile apps for Android and iOS using Rea
 
     <!-- PROJECT 1 -->
     <article class="project">
+      
+<div class="demo-video">
+  <h4>Watch the app demo</h4>
+
+  <video
+    controls
+    playsinline
+    preload="metadata"
+    poster="screenshots/quizmaster/3.jpg"
+  >
+    <source
+      src="assets/videos/quiz_master_demo.mp4"
+      type="video/mp4"
+    />
+    Your browser does not support HTML5 video.
+  </video>
+
+  <p class="caption">
+    Explore QuizMaster's interface and quiz experience.
+  </p>
+</div>
+
       <h3>QuizMaster</h3>
       <p class="role">Mobile developer, Solo|Hobby|Fullstack</p>
       <p>
@@ -259,6 +311,7 @@ A category-based quiz and learning app with hints, explanations, progress stats 
 <figure style="margin:0"><div class="phone"><div class="screen" data-label="Dashboard screen"><img src="screenshots/quizmaster/8.jpg" alt="QuizMaster dashboard screen" onerror="this.remove()" /></div></div><figcaption class="caption"></figcaption></figure>
 
 <figure style="margin:0"><div class="phone"><div class="screen" data-label="Settings screen"><img src="screenshots/quizmaster/9.jpg" alt="QuizMaster settings screen" onerror="this.remove()" /></div></div><figcaption class="caption"></figcaption></figure>
+     
       </div>
     </article>
     <!-- PROJECT 2 (copy this block for more projects) -->
