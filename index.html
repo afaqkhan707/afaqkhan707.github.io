@@ -141,6 +141,26 @@
   .shots .phone:nth-child(even) { margin-top: 24px; }
   .caption { font-size: .85rem; color: var(--muted); text-align: center; margin: 12px 0 0; }
 
+  /* desktop / web screenshots */
+.shots.desktop { align-items: flex-start; }
+.desk {
+  flex: none;
+  width: min(560px, 85vw);
+  margin: 0;
+  scroll-snap-align: start;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px -22px rgba(21, 26, 48, .5);
+}
+.desk .bar {
+  display: flex; gap: 6px; padding: 10px 12px;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.desk .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.desk img { display: block; width: 100%; height: auto; }
+
   /* skills */
   .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
   .skills div { border-left: 4px solid var(--accent); padding-left: 16px; }
@@ -286,7 +306,7 @@ A category-based quiz and learning app with hints, explanations, progress stats 
       <div class="links">
         <!-- <a href="YOUR-DEMO-VIDEO-URL">Watch demo</a> -->
         <a href="https://apps.apple.com/us/app/forecruise/id6759290771">App Store</a>
-         <a href="https://play.google.com/store/apps/details?id=com.forecruise.app&pcampaignid=web_share">Play Store Store</a>
+         <a href="https://play.google.com/store/apps/details?id=com.forecruise.app&pcampaignid=web_share">Play Store</a>
       </div>
       <div class="shots">
         <figure style="margin:0"><div class="phone"><div class="screen" data-label="Add images/client-2.png"><img src="screenshots/forcruise/0.jpg" alt="Client app screen 2" onerror="this.remove()" /></div></div><figcaption class="caption"></figcaption></figure>
@@ -342,14 +362,16 @@ Android: Health Connect integration
         <!-- <a href="https://play.google.com/store/apps/details?id=org.palwandew.efit&pcampaignid=web_share">App Store</a> -->
          <a href="https://hunzafurniturehouse.netlify.app/">Dashboard</a>
       </div>
-      <div class="shots">
-        <figure style="margin:0"><div class="phone"><div class="screen" data-label="Add images/client-2.png"><img src="screenshots/invoicer/1.png" alt="Client app screen 2" onerror="this.remove()" /></div></div><figcaption class="caption"></figcaption></figure>
-        <figure style="margin:0"><div class="phone"><div class="screen" data-label="Add images/client-1.png"><img src="screenshots/invoicer/2.png" alt="Client app screen 1" onerror="this.remove()" /></div></div><figcaption class="caption"></figcaption></figure>
-        <figure style="margin:0"><div class="phone"><div class="screen" data-label="Add images/client-2.png"><img src="screenshots/invoicer/3.png" alt="Client app screen 2" onerror="this.remove()" /></div></div><figcaption class="caption"></figcaption></figure>
-                <figure style="margin:0"><div class="phone"><div class="screen" data-label="Add images/client-1.png"><img src="screenshots/invoicer/4.png" alt="Client app screen 1" onerror="this.remove()" /></div></div><figcaption class="caption"></figcaption></figure>
-        <figure style="margin:0"><div class="phone"><div class="screen" data-label="Add images/client-2.png"><img src="screenshots/invoicer/5.png" alt="Client app screen 2" onerror="this.remove()" /></div></div><figcaption class="caption"></figcaption></figure>
+      
+<div class="shots desktop">
+  <figure class="desk"><div class="bar"><i></i><i></i><i></i></div><a href="screenshots/invoicer/1.png" target="_blank" rel="noopener"><img src="screenshots/invoicer/1.png" alt="Invoicer screen 1" loading="lazy" onerror="this.closest('figure').remove()" /></a></figure>
+  <figure class="desk"><div class="bar"><i></i><i></i><i></i></div><a href="screenshots/invoicer/2.png" target="_blank" rel="noopener"><img src="screenshots/invoicer/2.png" alt="Invoicer screen 2" loading="lazy" onerror="this.closest('figure').remove()" /></a></figure>
+  <figure class="desk"><div class="bar"><i></i><i></i><i></i></div><a href="screenshots/invoicer/3.png" target="_blank" rel="noopener"><img src="screenshots/invoicer/3.png" alt="Invoicer screen 3" loading="lazy" onerror="this.closest('figure').remove()" /></a></figure>
+  <figure class="desk"><div class="bar"><i></i><i></i><i></i></div><a href="screenshots/invoicer/4.png" target="_blank" rel="noopener"><img src="screenshots/invoicer/4.png" alt="Invoicer screen 4" loading="lazy" onerror="this.closest('figure').remove()" /></a></figure>
+  <figure class="desk"><div class="bar"><i></i><i></i><i></i></div><a href="screenshots/invoicer/5.png" target="_blank" rel="noopener"><img src="screenshots/invoicer/5.png" alt="Invoicer screen 5" loading="lazy" onerror="this.closest('figure').remove()" /></a></figure>
+</div>
         
-      </div>
+  
     </article>
   </section>
 
@@ -383,7 +405,7 @@ Android: Health Connect integration
   <section id="contact" class="contact">
     <h2 class="sec-title">Let's build your app</h2>
     <p class="sec-sub">Open to full-time roles and freelance projects. Email me and I'll reply within a day.</p>
-    <a class="mail" href="mailto:YOUR-EMAIL@example.com">afaqkhan707.work@gmail.com</a>
+    <a class="mail" href="afaqkhan707.work@gmail.com">afaqkhan707.work@gmail.com</a>
     <div class="social">
       <a href="https://linkedin.com/in/afaq-mehmood-667a31366">LinkedIn</a>
       <a href="https://github.com/afaqkhan707">Github</a>
@@ -409,7 +431,7 @@ Android: Health Connect integration
       'screenshots/forcruise/6.jpg',
       'screenshots/efit_login.jpg',
       'screenshots/efit_edit.jpg',
-      'screenshots/efit_setting.jpg'
+      'screenshots/efit_setting.jpg',
 'screenshots/quizmaster/1.jpg'
 'screenshots/quizmaster/2.jpg'
 'screenshots/quizmaster/3.jpg'
